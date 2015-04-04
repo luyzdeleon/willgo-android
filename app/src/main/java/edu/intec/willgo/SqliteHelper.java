@@ -74,4 +74,25 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         return prefList;
     }
+    //find a record by his name and return an object with all the info
+    public preference find(String name){
+        SQLiteDatabase db=this.getWritableDatabase();
+        preference pref;
+        Cursor cursor;
+        String selectOne="select  from "+DBTABLE+" where "+DBCOLUMNNAME+" = "+name;
+        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
+        try{
+            cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { String.valueOf(name) }, null, null, null);
+            if(cursor!=null)cursor.moveToFirst();
+
+            pref = new preference(cursor.getString(1).toString(),cursor.getString(2).toString(),cursor.getString(3).toString());
+            cursor.close();
+        }catch (Exception e){
+            pref = new preference(null, null, null);
+
+        }
+
+        return pref;
+    }
+
 }
