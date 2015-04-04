@@ -3,6 +3,7 @@ package edu.intec.willgo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.MenuItem;
 
 
 /**
@@ -77,5 +78,13 @@ public class InterestListActivity extends FragmentActivity
             detailIntent.putExtra(InterestDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    public void addInterestHandler(MenuItem item){
+        // Here we open the form to add a new interest
+    }
+
+    public void exitHandler(MenuItem item){
+        System.exit(0);
     }
 }
