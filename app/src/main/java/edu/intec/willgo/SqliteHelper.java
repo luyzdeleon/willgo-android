@@ -20,7 +20,8 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String TABLE_CREATE = "CREATE TABLE " +
-            DBTABLE + "(" + DBCOLUMNID + " INTEGER PRIMARY KEY , " + DBCOLUMNNAME + " TEXT, " + DBCOLUMNPLACE + " TEXT, " + DBCOLUMNNCOOR + " TEXT)";
+            DBTABLE + "(" + DBCOLUMNID + " INTEGER PRIMARY KEY , " + DBCOLUMNNAME + " TEXT, " +
+            DBCOLUMNPLACE + " TEXT, " + DBCOLUMNNCOOR + " TEXT)";
 
 
     public SqliteHelper(Context context) {
@@ -37,6 +38,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
 
     }
+
     public boolean insert(preference pref) {
 
         try {
@@ -53,5 +55,23 @@ public class SqliteHelper  extends SQLiteOpenHelper {
             return false;
         }
 
+    }
+    //returns a list of objects preference with all records saved on the data base
+     public List<preference> getAll(){
+        List<preference> prefList = new ArrayList<preference>();
+        String selectAll= "select * from "+DBTABLE;
+        SQLiteDatabase db= this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectAll,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                preference pref=new preference(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+                prefList.add(pref);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return prefList;
     }
 }
