@@ -1,17 +1,39 @@
 package edu.intec.willgo;
 
+
 /**
  * Created by LUIS on 4/3/2015.
  */
 public class preference {
-    public String name;
-    public String place;
-    public String coor;
+    private String name;
+    private String place;
+    private String coor;
 
     public preference(String name, String place, String coor){
         this.name=name;
         this.place=place;
         this.coor=coor;
     }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name=name;
+    }
+
+    public String getPlace(){
+        return place;
+    }
+    public void setPlace(String place){
+        this.place=place;
+    }
+
+    public String getCoor(){
+        return coor;
+    }
+    public void setCoor(String coor){
+        this.coor=coor;
+    }
+
 
 }

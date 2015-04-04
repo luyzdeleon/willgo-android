@@ -38,16 +38,17 @@ public class SqliteHelper  extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
 
     }
-
+    //insert a object preference on the db
+    //return true if the transaction was successful
     public boolean insert(preference pref) {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put(DBCOLUMNNAME, pref.name);
-            values.put(DBCOLUMNPLACE, pref.place);
-            values.put(DBCOLUMNNCOOR, pref.coor);
+            values.put(DBCOLUMNNAME, pref.getName());
+            values.put(DBCOLUMNPLACE, pref.getPlace());
+            values.put(DBCOLUMNNCOOR, pref.getCoor());
             db.insert(DBTABLE, null, values);
             db.close();
             return true;
@@ -109,11 +110,11 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DBCOLUMNNAME, pref.name);
-        values.put(DBCOLUMNPLACE, pref.place);
-        values.put(DBCOLUMNNCOOR, pref.coor);
+        values.put(DBCOLUMNNAME, pref.getName());
+        values.put(DBCOLUMNPLACE, pref.getPlace());
+        values.put(DBCOLUMNNCOOR, pref.getCoor());
 
-        return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.name) });
+        return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.getName()) });
     }
     //delete a row using as parameter the column name
     //returns if the row was delete
