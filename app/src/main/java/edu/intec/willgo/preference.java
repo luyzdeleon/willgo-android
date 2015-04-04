@@ -4,12 +4,12 @@ package edu.intec.willgo;
 /**
  * Created by LUIS on 4/3/2015.
  */
-public class preference {
+public class Preference {
     private String name;
     private String place;
     private String coor;
 
-    public preference(String name, String place, String coor){
+    public Preference(String name, String place, String coor){
         this.name=name;
         this.place=place;
         this.coor=coor;

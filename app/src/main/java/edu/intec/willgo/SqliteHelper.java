@@ -40,7 +40,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
     }
     //insert a object preference on the db
     //return true if the transaction was successful
-    public boolean insert(preference pref) {
+    public boolean insert(Preference pref) {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -58,8 +58,8 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
     }
     //returns a list of objects preference with all records saved on the data base
-     public List<preference> getAll(){
-        List<preference> prefList = new ArrayList<preference>();
+     public List<Preference> getAll(){
+        List<Preference> prefList = new ArrayList<Preference>();
         String selectAll= "select * from "+DBTABLE;
         SQLiteDatabase db= this.getWritableDatabase();
 
@@ -67,7 +67,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                preference pref=new preference(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+                Preference pref=new Preference(cursor.getString(1),cursor.getString(2),cursor.getString(3));
                 prefList.add(pref);
             }while (cursor.moveToNext());
         }
@@ -76,9 +76,9 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         return prefList;
     }
     //find a record by his name and return an object with all the info
-    public preference find(String name){
+    public Preference find(String name){
         SQLiteDatabase db=this.getWritableDatabase();
-        preference pref;
+        Preference pref;
         Cursor cursor;
         String selectOne="select  from "+DBTABLE+" where "+DBCOLUMNNAME+" = "+name;
         String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
@@ -86,10 +86,10 @@ public class SqliteHelper  extends SQLiteOpenHelper {
             cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { String.valueOf(name) }, null, null, null);
             if(cursor!=null)cursor.moveToFirst();
 
-            pref = new preference(cursor.getString(1).toString(),cursor.getString(2).toString(),cursor.getString(3).toString());
+            pref = new Preference(cursor.getString(1).toString(),cursor.getString(2).toString(),cursor.getString(3).toString());
             cursor.close();
         }catch (Exception e){
-            pref = new preference(null, null, null);
+            pref = new Preference(null, null, null);
 
         }
 
@@ -106,7 +106,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         //update a row or many of them(if they have the same name)
         // using the column name of the bd
         //returns the number of row affected
-     public int update( preference pref) {
+     public int update( Preference pref) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
