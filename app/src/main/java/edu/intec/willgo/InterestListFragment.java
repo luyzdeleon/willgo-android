@@ -73,12 +73,19 @@ public class InterestListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        SqliteHelper dbHelper = new SqliteHelper(this.getActivity());
+
+        /* For test porpouses only!
+        dbHelper.deleteAll();
+        Preference dummyPref = new Preference("Mi Interes 1", "Santo Domingo", "1,2");
+        dbHelper.insert(dummyPref);
+        */
+
+        setListAdapter(new ArrayAdapter<Preference>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyContent.ITEMS));
+                dbHelper.getAll()));
     }
 
     @Override

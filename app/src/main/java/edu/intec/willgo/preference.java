@@ -35,5 +35,8 @@ public class Preference {
         this.coor=coor;
     }
 
-
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

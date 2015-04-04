@@ -75,6 +75,13 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         return prefList;
     }
+
+    //Deletes all from preference table
+    public void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(DBTABLE, null, null);
+    }
+
     //find a record by his name and return an object with all the info
     public Preference find(String name){
         SQLiteDatabase db=this.getWritableDatabase();
