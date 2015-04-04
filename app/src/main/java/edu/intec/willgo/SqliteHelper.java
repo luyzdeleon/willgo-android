@@ -94,5 +94,24 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         return pref;
     }
+    //return the currently number of rows in the database
+    public long countRows(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String select="select * from "+DBTABLE;
+        Cursor cursor= db.rawQuery(select,null);
+        return cursor.getCount();
 
+    }
+        //update a row or many of them(if they have the same name) and
+        //returns the number of row affected
+     public int update( preference pref) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DBCOLUMNNAME, pref.name);
+        values.put(DBCOLUMNPLACE, pref.place);
+        values.put(DBCOLUMNNCOOR, pref.coor);
+
+        return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.name) });
+    }
 }
