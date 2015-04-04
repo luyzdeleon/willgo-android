@@ -102,7 +102,8 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         return cursor.getCount();
 
     }
-        //update a row or many of them(if they have the same name) and
+        //update a row or many of them(if they have the same name)
+        // using the column name of the bd
         //returns the number of row affected
      public int update( preference pref) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -113,5 +114,18 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         values.put(DBCOLUMNNCOOR, pref.coor);
 
         return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.name) });
+    }
+    //delete a row using as parameter the column name
+    //returns if the row was delete
+    public boolean delete(String name) {
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            db.delete(DBTABLE, DBCOLUMNNAME + " = ?", new String[] { String.valueOf(name) });
+            db.close();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }
