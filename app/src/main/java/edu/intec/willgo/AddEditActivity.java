@@ -59,7 +59,14 @@ public class AddEditActivity extends ActionBarActivity {
     // this method executes when user clicks save on the form
     public void savePreference(View button) {
 
-        Log.e("est", messageID+"");
+        //adds new preference if 0, else updates preference
+        if(messageID == 0){
+
+
+        } else {
+
+
+        }
     }
 
     // this method executes when user clicks cancel on the form

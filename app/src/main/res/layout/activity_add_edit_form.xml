@@ -16,7 +16,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/EditTextLugar"
+        android:id="@+id/EditTextPlace"
         android:layout_height="wrap_content"
         android:hint="Lugar (Pais)"
         android:inputType="textPersonName"
@@ -24,7 +24,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/EditTextUbicacion"
+        android:id="@+id/EditTextLocation"
         android:layout_height="wrap_content"
         android:hint="Ubicacion (Direccion)"
         android:inputType="text"
