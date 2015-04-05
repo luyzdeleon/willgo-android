@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InterestListActivity" />
         </activity>
+        <activity
+            android:name=".AddEditActivity"
+            android:label="@string/title_activity_add_edit_form" >
+        </activity>
+        <activity
+            android:name=".dummy.Test"
+            android:label="@string/title_activity_test" >
+        </activity>
     </application>
 
 </manifest>
