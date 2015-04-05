@@ -89,10 +89,9 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         Preference pref;
         Cursor cursor;
-        String selectOne="select  from "+DBTABLE+" where "+DBCOLUMNNAME+" = "+name;
         String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
         try{
-            cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { String.valueOf(name) }, null, null, null);
+            cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { name }, null, null, null);
             if(cursor!=null)cursor.moveToFirst();
 
              pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
@@ -105,6 +104,27 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         return pref;
     }
+    //find a record by his ID and return an object with all the info
+    public Preference findById(int id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Preference pref;
+        Cursor cursor;
+        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
+        try{
+            cursor= db.query(DBTABLE, columns ,DBCOLUMNID+" = ?" ,new String[] { String.valueOf(id) }, null, null, null);
+            if(cursor!=null)cursor.moveToFirst();
+
+            pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
+                    cursor.getString(2),cursor.getString(3));
+            cursor.close();
+        }catch (Exception e){
+            pref = new Preference(0,null, null, null);
+
+        }
+
+        return pref;
+    }
+
     //return the currently number of rows in the database
     public long countRows(){
         SQLiteDatabase db=this.getWritableDatabase();
