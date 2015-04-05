@@ -1,20 +1,36 @@
 package edu.intec.willgo;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+
+import edu.intec.willgo.dummy.Test;
 
 
 public class AddEditActivity extends ActionBarActivity {
+
+
+    // has the id of the preference
+    public int messageID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_form);
-        Log.e("asdasd","no se");
+        Intent intent = getIntent();
+
+        //receives the id of the preference, 0 if it is a new one
+        messageID = Integer.parseInt(intent.getStringExtra(Test.EXTRA_MESSAGE));
+
+        if(messageID != 0){
+            fillFields();
+        }
+
     }
 
 
@@ -42,11 +58,29 @@ public class AddEditActivity extends ActionBarActivity {
 
     // this method executes when user clicks save on the form
     public void savePreference(View button) {
-        System.out.println("Hola");
-}
+
+        Log.e("est", messageID+"");
+    }
 
     // this method executes when user clicks cancel on the form
     public void cancelActivity(View button) {
-        System.out.println("Adios");
+        //finishes current activity and returns to previous activity
+        this.finish();
+    }
+
+
+    //fills the fields of the form with preference data
+    public void fillFields(){
+
+        EditText preferenceName = (EditText) findViewById(R.id.EditTextName);
+        EditText preferencePlace = (EditText) findViewById(R.id.EditTextPlace);
+        EditText preferenceLocation = (EditText) findViewById(R.id.EditTextLocation);
+
+        //fill fields from database
+
+        //this is a dummy thing
+        preferenceName.setText(messageID+"");
+        preferencePlace.setText("mi casa");
+        preferenceLocation.setText("ese lugar");
     }
 }
