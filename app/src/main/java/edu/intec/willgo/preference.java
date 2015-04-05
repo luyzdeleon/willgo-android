@@ -8,11 +8,19 @@ public class Preference {
     private String name;
     private String place;
     private String coor;
+    private int id;
 
-    public Preference(String name, String place, String coor){
+    public Preference(int id,String name, String place, String coor){
+        this.id=id;
         this.name=name;
         this.place=place;
         this.coor=coor;
+    }
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id=id;
     }
     public String getName(){
         return name;

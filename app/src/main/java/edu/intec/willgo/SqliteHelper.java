@@ -67,7 +67,9 @@ public class SqliteHelper  extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Preference pref=new Preference(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+
+                Preference pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
+                        cursor.getString(2),cursor.getString(3));
                 prefList.add(pref);
             }while (cursor.moveToNext());
         }
@@ -93,10 +95,11 @@ public class SqliteHelper  extends SQLiteOpenHelper {
             cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { String.valueOf(name) }, null, null, null);
             if(cursor!=null)cursor.moveToFirst();
 
-            pref = new Preference(cursor.getString(1).toString(),cursor.getString(2).toString(),cursor.getString(3).toString());
+             pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
+                    cursor.getString(2),cursor.getString(3));
             cursor.close();
         }catch (Exception e){
-            pref = new Preference(null, null, null);
+            pref = new Preference(0,null, null, null);
 
         }
 
