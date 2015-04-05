@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 /**
@@ -25,7 +24,6 @@ public class SplashActivity extends ActionBarActivity {
             private boolean warned = false;
             @Override
             public void onTick(long millisUntilFinished_) {
-                Log.d("Me lleva", new Long(millisUntilFinished_).toString());
                 pBar.incrementProgressBy(new Long(millisUntilFinished_).intValue());
             }
 
