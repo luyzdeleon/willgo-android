@@ -1,5 +1,7 @@
 package edu.intec.willgo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ public class AddEditActivity extends ActionBarActivity {
 
     // has the id of the preference
     public int messageID;
+    public SqliteHelper sql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +62,27 @@ public class AddEditActivity extends ActionBarActivity {
     // this method executes when user clicks save on the form
     public void savePreference(View button) {
 
+        EditText preferenceName = (EditText) findViewById(R.id.EditTextName);
+        EditText preferencePlace = (EditText) findViewById(R.id.EditTextPlace);
+        EditText preferenceLocation = (EditText) findViewById(R.id.EditTextLocation);
+
+
+        sql = new SqliteHelper(this);
+        Preference p = new Preference(messageID, preferenceName.getText().toString(), preferencePlace.getText().toString(), preferenceLocation.getText().toString());
         //adds new preference if 0, else updates preference
         if(messageID == 0){
 
+            sql.insert(p);
+            this.finish();
 
         } else {
 
+            sql.update(p);
+            this.finish();
 
         }
+
+
     }
 
     // this method executes when user clicks cancel on the form
@@ -85,9 +101,10 @@ public class AddEditActivity extends ActionBarActivity {
 
         //fill fields from database
 
-        //this is a dummy thing
-        preferenceName.setText(messageID+"");
-        preferencePlace.setText("mi casa");
-        preferenceLocation.setText("ese lugar");
+        sql = new SqliteHelper(this);
+        Preference p = sql.findById(messageID);
+        preferenceName.setText(p.getName());
+        preferencePlace.setText(p.getPlace());
+        preferenceLocation.setText(p.getCoor());
     }
 }
