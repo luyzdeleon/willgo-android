@@ -3,5 +3,9 @@
 
     <string name="app_name">willgo</string>
     <string name="title_interest_detail">Interest Detail</string>
+    <string name="title_activity_add_edit_form">AddEditForm</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
