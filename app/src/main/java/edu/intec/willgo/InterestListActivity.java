@@ -49,8 +49,6 @@ public class InterestListActivity extends FragmentActivity
                     .findFragmentById(R.id.interest_list))
                     .setActivateOnItemClick(true);
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
@@ -59,29 +57,15 @@ public class InterestListActivity extends FragmentActivity
      */
     @Override
     public void onItemSelected(String id) {
-        if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(InterestDetailFragment.ARG_ITEM_ID, id);
-            InterestDetailFragment fragment = new InterestDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.interest_detail_container, fragment)
-                    .commit();
-
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, InterestDetailActivity.class);
-            detailIntent.putExtra(InterestDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
-        }
+        Intent intent = new Intent(this, AddEditActivity.class);
+        intent.putExtra(AddEditActivity.EXTRA_MESSAGE, id);
+        startActivity(intent);
     }
 
     public void addInterestHandler(MenuItem item){
-        // Here we open the form to add a new interest
+        Intent intent = new Intent(this, AddEditActivity.class);
+        intent.putExtra(AddEditActivity.EXTRA_MESSAGE, "0");
+        startActivity(intent);
     }
 
     public void exitHandler(MenuItem item){

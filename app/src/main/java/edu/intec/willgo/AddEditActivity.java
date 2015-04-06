@@ -1,17 +1,10 @@
 package edu.intec.willgo;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
-
-import edu.intec.willgo.dummy.Test;
 
 
 public class AddEditActivity extends ActionBarActivity {
@@ -20,6 +13,7 @@ public class AddEditActivity extends ActionBarActivity {
     // has the id of the preference
     public int messageID;
     public SqliteHelper sql;
+    public final static String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,35 +22,12 @@ public class AddEditActivity extends ActionBarActivity {
         Intent intent = getIntent();
 
         //receives the id of the preference, 0 if it is a new one
-        messageID = Integer.parseInt(intent.getStringExtra(Test.EXTRA_MESSAGE));
+        messageID = Integer.parseInt(intent.getStringExtra(EXTRA_MESSAGE));
 
         if(messageID != 0){
             fillFields();
         }
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_edit_form, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     // this method executes when user clicks save on the form

@@ -39,6 +39,8 @@ public class InterestListFragment extends ListFragment {
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
+    private SqliteHelper dbHelper;
+
     /**
      * A callback interface that all activities containing this fragment must
      * implement. This mechanism allows activities to be notified of item
@@ -73,7 +75,7 @@ public class InterestListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-        SqliteHelper dbHelper = new SqliteHelper(this.getActivity());
+        dbHelper = new SqliteHelper(this.getActivity());
 
         /* For test porpouses only!
         dbHelper.deleteAll();
@@ -86,6 +88,18 @@ public class InterestListFragment extends ListFragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 dbHelper.getAll()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(dbHelper != null){
+            setListAdapter(new ArrayAdapter<Preference>(
+                    getActivity(),
+                    android.R.layout.simple_list_item_activated_1,
+                    android.R.id.text1,
+                    dbHelper.getAll()));
+        }
     }
 
     @Override
