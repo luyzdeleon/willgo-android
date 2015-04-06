@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import edu.intec.willgo.dummy.DummyContent;
-
 /**
  * A list fragment representing a list of Interests. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -77,12 +75,6 @@ public class InterestListFragment extends ListFragment {
         setHasOptionsMenu(true);
         dbHelper = new SqliteHelper(this.getActivity());
 
-        /* For test porpouses only!
-        dbHelper.deleteAll();
-        Preference dummyPref = new Preference("Mi Interes 1", "Santo Domingo", "1,2");
-        dbHelper.insert(dummyPref);
-        */
-
         setListAdapter(new ArrayAdapter<Preference>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
@@ -137,9 +129,8 @@ public class InterestListFragment extends ListFragment {
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        Preference selectedPref = (Preference)listView.getAdapter().getItem(position);
+        mCallbacks.onItemSelected(Integer.toString(selectedPref.getId()));
     }
 
     @Override

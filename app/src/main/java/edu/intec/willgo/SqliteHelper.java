@@ -16,12 +16,13 @@ public class SqliteHelper  extends SQLiteOpenHelper {
     private static final String DBCOLUMNID = "id";
     private static final String DBCOLUMNNAME = "name";
     private static final String DBCOLUMNPLACE = "place";
+    private static final String DBCOLUMNLOCATION = "location";
     private static final String DBCOLUMNNCOOR = "coor";
 
     private static final int VERSION = 1;
     private static final String TABLE_CREATE = "CREATE TABLE " +
             DBTABLE + "(" + DBCOLUMNID + " INTEGER PRIMARY KEY , " + DBCOLUMNNAME + " TEXT, " +
-            DBCOLUMNPLACE + " TEXT, " + DBCOLUMNNCOOR + " TEXT)";
+            DBCOLUMNPLACE + " TEXT, " + DBCOLUMNLOCATION + " TEXT, " + DBCOLUMNNCOOR + " TEXT)";
 
 
     public SqliteHelper(Context context) {
@@ -49,6 +50,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
             values.put(DBCOLUMNNAME, pref.getName());
             values.put(DBCOLUMNPLACE, pref.getPlace());
             values.put(DBCOLUMNNCOOR, pref.getCoor());
+            values.put(DBCOLUMNLOCATION, pref.getLocation());
             db.insert(DBTABLE, null, values);
             db.close();
             return true;
@@ -69,7 +71,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
             do{
 
                 Preference pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
-                        cursor.getString(2),cursor.getString(3));
+                        cursor.getString(2),cursor.getString(3), cursor.getString(4));
                 prefList.add(pref);
             }while (cursor.moveToNext());
         }
@@ -89,17 +91,16 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         Preference pref;
         Cursor cursor;
-        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
+        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNLOCATION, DBCOLUMNNCOOR};
         try{
             cursor= db.query(DBTABLE, columns ,DBCOLUMNNAME+" = ?" ,new String[] { name }, null, null, null);
             if(cursor!=null)cursor.moveToFirst();
 
              pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
-                    cursor.getString(2),cursor.getString(3));
+                     cursor.getString(2),cursor.getString(3), cursor.getString(4));
             cursor.close();
         }catch (Exception e){
-            pref = new Preference(0,null, null, null);
-
+            pref = new Preference(0,"", "", "", "");
         }
 
         return pref;
@@ -109,16 +110,16 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         Preference pref;
         Cursor cursor;
-        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNNCOOR};
+        String[] columns=new String[]{DBCOLUMNID, DBCOLUMNNAME, DBCOLUMNPLACE, DBCOLUMNLOCATION, DBCOLUMNNCOOR};
         try{
             cursor= db.query(DBTABLE, columns ,DBCOLUMNID+" = ?" ,new String[] { String.valueOf(id) }, null, null, null);
             if(cursor!=null)cursor.moveToFirst();
 
             pref=new Preference(Integer.parseInt(cursor.getString(0).toString()),cursor.getString(1),
-                    cursor.getString(2),cursor.getString(3));
+                    cursor.getString(2),cursor.getString(3), cursor.getString(4));
             cursor.close();
         }catch (Exception e){
-            pref = new Preference(0,null, null, null);
+            pref = new Preference(0, "", "", "", "");
 
         }
 
@@ -143,6 +144,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         values.put(DBCOLUMNNAME, pref.getName());
         values.put(DBCOLUMNPLACE, pref.getPlace());
         values.put(DBCOLUMNNCOOR, pref.getCoor());
+        values.put(DBCOLUMNLOCATION, pref.getLocation());
 
         return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.getName()) });
     }

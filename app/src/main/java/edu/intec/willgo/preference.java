@@ -7,14 +7,16 @@ package edu.intec.willgo;
 public class Preference {
     private String name;
     private String place;
+    private String location;
     private String coor;
     private int id;
 
-    public Preference(int id,String name, String place, String coor){
+    public Preference(int id,String name, String place, String location,String coor){
         this.id=id;
         this.name=name;
         this.place=place;
         this.coor=coor;
+        this.setLocation(location);
     }
     public int getId(){
         return id;
@@ -46,5 +48,13 @@ public class Preference {
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
