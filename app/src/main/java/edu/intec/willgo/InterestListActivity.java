@@ -62,6 +62,10 @@ public class InterestListActivity extends FragmentActivity
         startActivity(intent);
     }
 
+    /**
+     * Adds a new preference!
+     * @param item
+     */
     public void addInterestHandler(MenuItem item){
         Intent intent = new Intent(this, AddEditActivity.class);
         intent.putExtra(AddEditActivity.EXTRA_MESSAGE, "0");

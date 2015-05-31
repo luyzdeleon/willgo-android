@@ -146,7 +146,7 @@ public class SqliteHelper  extends SQLiteOpenHelper {
         values.put(DBCOLUMNNCOOR, pref.getCoor());
         values.put(DBCOLUMNLOCATION, pref.getLocation());
 
-        return db.update(DBTABLE, values, DBCOLUMNNAME + " = ?",new String[] { String.valueOf(pref.getName()) });
+        return db.update(DBTABLE, values, DBCOLUMNID + " = ?",new String[] { String.valueOf(pref.getId()) });
     }
     //delete a row using as parameter the column name
     //returns if the row was delete

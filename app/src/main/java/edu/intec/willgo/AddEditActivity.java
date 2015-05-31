@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,6 +72,15 @@ public class AddEditActivity extends ActionBarActivity {
             }
         });
 
+        //Add validations to text
+        EditText preferenceName = (EditText) findViewById(R.id.EditTextName);
+        EditText preferencePlace = (EditText) findViewById(R.id.EditTextPlace);
+        EditText preferenceLocation = (EditText) findViewById(R.id.EditTextLocation);
+
+        preferenceName.addTextChangedListener(new FieldIsRequiredValidator(preferenceName));
+        preferencePlace.addTextChangedListener(new FieldIsRequiredValidator(preferencePlace));
+        preferenceLocation.addTextChangedListener(new FieldIsRequiredValidator(preferenceLocation));
+
     }
 
     private Location getLastKnownLocation() {
@@ -97,20 +107,51 @@ public class AddEditActivity extends ActionBarActivity {
         EditText preferenceLocation = (EditText) findViewById(R.id.EditTextLocation);
         String latLong = this.currLatLng == null ? "" : this.serializeLatLong(this.currLatLng);
 
-        sql = new SqliteHelper(this);
-        Preference p = new Preference(messageID, preferenceName.getText().toString(), preferencePlace.getText().toString(), preferenceLocation.getText().toString(), latLong);
-        //adds new preference if 0, else updates preference
-        if(messageID == 0){
+        String prefName = preferenceName.getText().toString();
+        String prefPlace = preferencePlace.getText().toString();
+        String prefLoc = preferenceLocation.getText().toString();
 
-            sql.insert(p);
-            this.finish();
 
-        } else {
 
-            sql.update(p);
-            this.finish();
 
+
+        if(prefName.equals("") || prefName == null){
+            Toast.makeText(this, "Debe introducir un Nombre", Toast.LENGTH_SHORT).show();
+            return;
         }
+        else if(prefPlace.equals("") || prefPlace == null){
+            Toast.makeText(this, "Debe introducir un Pais", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(prefLoc.equals("") || prefLoc == null){
+            Toast.makeText(this, "Debe introducir una Locacion", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
+        sql = new SqliteHelper(this);
+        Preference test = sql.find(preferenceName.getText().toString());
+        if(test.getName().equals(prefName)){
+            Toast.makeText(this, "Ese interes ya existe", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Preference p = new Preference(messageID, preferenceName.getText().toString(), preferencePlace.getText().toString(), preferenceLocation.getText().toString(), latLong);
+            //adds new preference if 0, else updates preference
+            if(messageID == 0){
+
+                sql.insert(p);
+                this.finish();
+
+            } else {
+
+                sql.update(p);
+                this.finish();
+
+            }
+        }
+
+
     }
 
     private String serializeLatLong(LatLng latLong){
